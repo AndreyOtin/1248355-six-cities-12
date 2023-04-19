@@ -50,7 +50,9 @@ const Header = ({ isLoginRoute }: HeaderProps) => {
                     <>
                       <li className="header__nav-item user">
                         <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
-                          <div className="header__avatar-wrapper user__avatar-wrapper"></div>
+                          <div className="header__avatar-wrapper user__avatar-wrapper">
+                            <img style={{borderRadius: '50%'}} src={user?.avatarUrl} alt="user avatar"/>
+                          </div>
                           <span className="header__user-name user__name">{user?.email}</span>
                           <FavoritesCount/>
                         </Link>
