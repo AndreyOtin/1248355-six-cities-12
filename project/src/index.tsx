@@ -18,7 +18,7 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <Provider store={store}>
-    <HistoryRouter basename='/six-cities' history={browserHistory}>
+    <HistoryRouter history={browserHistory}>
       <ToastContainer
         limit={MaxElementCountOnScreen.ToastError}
         position="top-center"

@@ -10,12 +10,11 @@ const filter = {
   [City.Hamburg]: (offers: Offers) => offers.filter((offer) => offer.city.name === City.Hamburg)
 };
 
-const filterOffersByCity = (offers: Offers) =>
-  Object.values(City)
-    .reduce<FilteredOffer[]>((filteredOffers, city) => {
-      const cityOffers = filter[city](offers);
+const filterOffersByCity = (offers: Offers) => Object.values(City)
+  .reduce<FilteredOffer[]>((filteredOffers, city) => {
+    const cityOffers = filter[city](offers);
 
-      return cityOffers.length ? [...filteredOffers, { city, cityOffers }] : filteredOffers;
-    }, []);
+    return cityOffers.length ? [...filteredOffers, { city, cityOffers }] : filteredOffers;
+  }, []);
 
 export { filterOffersByCity, filter };
