@@ -1,8 +1,7 @@
 import { BookmarkVariant } from '../../types/app';
-import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import { updateFavorite } from '../../store/middlewares/thunk/thunk-actions';
-import { getUserStatus } from '../../store/reducers/user-slice/selectors';
+import { getFavorites, getUserStatus } from '../../store/reducers/user-slice/selectors';
 import { AppRoute, AuthorizationStatus } from '../../consts/enum';
 import classNames from 'classnames';
 import { useNavigate } from 'react-router-dom';
@@ -10,13 +9,13 @@ import { toast } from 'react-toastify';
 
 type ButtonProps = {
   variant: BookmarkVariant;
-  isFavorite: boolean;
   id: number;
 }
 
-const BookmarkButton = ({ variant, isFavorite, id }: ButtonProps) => {
+const BookmarkButton = ({ variant, id }: ButtonProps) => {
   const authStatus = useAppSelector(getUserStatus);
-  const [isActive, setActive] = useState(isFavorite);
+  const favorites = useAppSelector(getFavorites);
+  const isFavorite = favorites?.some((f) => f.id === id);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -31,12 +30,10 @@ const BookmarkButton = ({ variant, isFavorite, id }: ButtonProps) => {
       const action = await dispatch(
         updateFavorite({
           id,
-          isFavorite: !isActive
+          isFavorite: !isFavorite
         }));
 
-      if (updateFavorite.fulfilled.match(action)) {
-        setActive(!isActive);
-      } else {
+      if (updateFavorite.rejected.match(action)) {
         toast.error(action.error.message, { toastId: action.error.code });
       }
     })();
@@ -48,7 +45,7 @@ const BookmarkButton = ({ variant, isFavorite, id }: ButtonProps) => {
       className={
         classNames(
           `${variant.block}__bookmark-button button`,
-          { [`${variant.block}__bookmark-button--active`]: isActive }
+          { [`${variant.block}__bookmark-button--active`]: isFavorite }
         )
       }
       type="button"

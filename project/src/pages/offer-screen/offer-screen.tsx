@@ -83,7 +83,7 @@ const OfferScreen = ({ handleErrorScreensShow }: OffersScreenProps) => {
             {offer.isPremium && <Mark block={Block.Property}/>}
             <div className="property__name-wrapper">
               <h1 className="property__name">{offer.title}</h1>
-              <BookmarkButton id={offer.id} isFavorite={offer.isFavorite} variant={BookmarkButtonVariant.Offer}/>
+              <BookmarkButton id={offer.id} variant={BookmarkButtonVariant.Offer}/>
             </div>
             <Rating block={Block.Property} rating={offer.rating}/>
             <ul className="property__features">

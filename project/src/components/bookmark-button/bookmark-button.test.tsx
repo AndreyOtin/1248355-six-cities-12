@@ -25,7 +25,7 @@ describe('Component: BookmarkButton', () => {
   it('should render correctly', () => {
     render(
       <ProviderWrapper fakeStore={fakeStore}>
-        <BookmarkButton variant={BookmarkButtonVariant.Card} isFavorite={isFavorite} id={id}/>
+        <BookmarkButton variant={BookmarkButtonVariant.Card} id={id}/>
       </ProviderWrapper>
     );
 
@@ -41,7 +41,6 @@ describe('Component: BookmarkButton', () => {
             element={
               <BookmarkButton
                 variant={BookmarkButtonVariant.Card}
-                isFavorite={isFavorite}
                 id={id}
               />
             }
@@ -63,12 +62,13 @@ describe('Component: BookmarkButton', () => {
 
   it('should have !isFavorite if dispatch fulfilled', async () => {
     fakeState[NameSpace.User] = {
-      authorizationStatus: AuthorizationStatus.Auth
+      authorizationStatus: AuthorizationStatus.Auth,
+      favorites: [{ id }]
     };
 
     render(
       <ProviderWrapper fakeStore={fakeStore}>
-        <BookmarkButton variant={BookmarkButtonVariant.Card} isFavorite={isFavorite} id={id}/>
+        <BookmarkButton variant={BookmarkButtonVariant.Card} id={id}/>
       </ProviderWrapper>
     );
 

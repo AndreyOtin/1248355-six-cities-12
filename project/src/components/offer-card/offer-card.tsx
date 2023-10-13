@@ -8,11 +8,9 @@ import { makeFirstLetterUpperCase } from '../../utils/common';
 import BookmarkButton from '../bookmark-button/bookmark-button';
 import Price from '../price/price';
 import Rating from '../rating/rating';
-import { useAppDispatch, useAppSelector } from '../../hooks/store';
-
+import { useAppDispatch } from '../../hooks/store';
 import React from 'react';
 import { changeActiveOffer } from '../../store/reducers/cities-slice/cities-slice';
-import { getFavorites } from '../../store/reducers/user-slice/selectors';
 
 type PlaceCardProps = {
   variant: OfferVariant;
@@ -23,12 +21,8 @@ const OfferCard = ({ variant, offer }: PlaceCardProps) => {
   const { block, imgSize } = variant;
   const { isPremium, previewImage, title, type, rating, price, id } = offer;
 
-  const favorites = useAppSelector(getFavorites);
-  const isFavorite = favorites?.some((f) => f.id === id);
-
   const isFavoriteVariant = OfferCardVariant.Favorites === variant;
   const isMouseEnterEvent = OfferCardVariant.Cities === variant || undefined;
-
 
   const dispatch = useAppDispatch();
 
@@ -59,7 +53,6 @@ const OfferCard = ({ variant, offer }: PlaceCardProps) => {
           <Price price={price} block={Block.OfferCard}/>
           <BookmarkButton
             variant={BookmarkButtonVariant.Card}
-            isFavorite={isFavorite}
             id={id}
           />
         </div>
